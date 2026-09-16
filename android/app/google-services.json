@@ -1,0 +1,74 @@
+{
+  "project_info": {
+    "project_number": "636624887085",
+    "firebase_url": "https://fcmexampleandroid-7bc9a.firebaseio.com",
+    "project_id": "fcmexampleandroid-7bc9a",
+    "storage_bucket": "fcmexampleandroid-7bc9a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636624887085:android:9e83219ee11fef123307a4",
+        "android_client_info": {
+          "package_name": "com.example.flutter_developer_as_final_78518_damini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636624887085-vhd6sqacsseru3pfeqgbtis18p3og66j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_developer_as_final_78518_damini",
+            "certificate_hash": "487eb3e0cadf58ac0dcece8bb0a361ce8b26210e"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrkb--ffYEffPPXS9BHblNol5gDQhE1r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636624887085-0e06p14rdrtagc98u9dmpbvh8d6k6i6q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterDeveloperAsFinal78518Damini"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636624887085:android:7a9357e69b53b597",
+        "android_client_info": {
+          "package_name": "com.example.syntagi.weardemo1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrkb--ffYEffPPXS9BHblNol5gDQhE1r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636624887085-0e06p14rdrtagc98u9dmpbvh8d6k6i6q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterDeveloperAsFinal78518Damini"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
