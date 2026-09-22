@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/employee_cubit.dart';
 import 'package:flutter_developer_as_final_78518_damini/features/auth/model/employee_model.dart';
 import '../cubit/employee_state.dart';
+import '../cubit/country_cubit.dart';
 
 class AddEditEmployeeScreen extends StatefulWidget {
   final Employee? employee;
@@ -167,10 +168,7 @@ class _AddEditEmployeeScreenState
                   keyboardType: TextInputType.phone,
                 ),
 
-                buildTextField(
-                  label: 'Country',
-                  controller: countryController,
-                ),
+                buildCountryDropdown(),
 
                 buildTextField(
                   label: 'State',
@@ -212,4 +210,93 @@ class _AddEditEmployeeScreenState
       ),
     );
   }
+
+  Widget buildCountryDropdown() {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 16),
+    child: BlocBuilder<CountryCubit, CountryState>(
+      builder: (context, state) {
+        if (state is CountryLoading) {
+          return const InputDecorator(
+            decoration: InputDecoration(
+              labelText: 'Country',
+              border: OutlineInputBorder(),
+            ),
+            child: SizedBox(
+              height: 24,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }
+
+        if (state is CountryError) {
+          return InputDecorator(
+            decoration: const InputDecoration(
+              labelText: 'Country',
+              border: OutlineInputBorder(),
+            ),
+            child: Text(state.message),
+          );
+        }
+
+        if (state is CountryLoaded) {
+          final countries = state.countries;
+
+          final currentCountry =
+              countryController.text.trim();
+
+          String? selectedCountry;
+
+          if (currentCountry.isNotEmpty) {
+            for (final country in countries) {
+              if (country.country.trim().toLowerCase() ==
+                  currentCountry.toLowerCase()) {
+                selectedCountry = country.country;
+                break;
+              }
+            }
+          }
+
+          return DropdownButtonFormField<String>(
+            value: selectedCountry,
+
+            decoration: const InputDecoration(
+              labelText: 'Country',
+              border: OutlineInputBorder(),
+            ),
+
+            hint: const Text('Select Country'),
+
+            isExpanded: true,
+
+            items: countries.map((country) {
+              return DropdownMenuItem<String>(
+                value: country.country,
+                child: Text(country.country),
+              );
+            }).toList(),
+
+            onChanged: (value) {
+              setState(() {
+                countryController.text = value ?? '';
+              });
+            },
+
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Country is required';
+              }
+
+              return null;
+            },
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
+    ),
+  );
+ }
 }

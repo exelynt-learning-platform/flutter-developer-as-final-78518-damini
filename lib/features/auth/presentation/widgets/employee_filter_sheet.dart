@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_developer_as_final_78518_damini/features/auth/presentation/bloc/country_bloc.dart';
-
 import '../cubit/employee_cubit.dart';
+import '../cubit/employee_state.dart';
+import '../cubit/country_cubit.dart';
 
 class EmployeeFilterSheet extends StatefulWidget {
   const EmployeeFilterSheet({super.key});
@@ -101,45 +101,15 @@ class _EmployeeFilterSheetState extends State<EmployeeFilterSheet> {
 
             const SizedBox(height: 12),
 
-            // BlocBuilder<CountryBloc, CountryState>(
-            //   builder: (context, state) {
-            //     if (state is CountryLoading) {
-            //       return const CircularProgressIndicator();
-            //     }
-            //
-            //     if (state is CountryError) {
-            //       return Text(state.message);
-            //     }
-            //
-            //     if (state is CountryLoaded) {
-            //       return DropdownButtonFormField<String>(
-            //         decoration: const InputDecoration(
-            //           labelText: 'Country',
-            //           border: OutlineInputBorder(),
-            //         ),
-            //         items: state.countries.map((country) {
-            //           return DropdownMenuItem<String>(
-            //             value: country.name,
-            //             child: Text(country.name),
-            //           );
-            //         }).toList(),
-            //         onChanged: (value) {
-            //           // selected country
-            //         },
-            //       );
-            //     }
-            //
-            //     return const SizedBox();
-            //   },
-            // ),
+            buildCountryDropdown(),
 
-             TextField(
-              controller: _countryController,
-              decoration: const InputDecoration(
-                labelText: 'Country',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            // TextField(
+            //   controller: _countryController,
+            //   decoration: const InputDecoration(
+            //     labelText: 'Country',
+            //     border: OutlineInputBorder(),
+            //   ),
+            // ),
 
             const SizedBox(height: 20),
 
@@ -173,4 +143,92 @@ class _EmployeeFilterSheetState extends State<EmployeeFilterSheet> {
       ),
     );
   }
+
+  Widget buildCountryDropdown() {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 16),
+    child: BlocBuilder<CountryCubit, CountryState>(
+      builder: (context, state) {
+        if (state is CountryLoading) {
+          return const InputDecorator(
+            decoration: InputDecoration(
+              labelText: 'Country',
+              border: OutlineInputBorder(),
+            ),
+            child: SizedBox(
+              height: 24,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }
+
+        if (state is CountryError) {
+          return InputDecorator(
+            decoration: const InputDecoration(
+              labelText: 'Country',
+              border: OutlineInputBorder(),
+            ),
+            child: Text(state.message),
+          );
+        }
+
+        if (state is CountryLoaded) {
+          final countries = state.countries;
+
+          final currentCountry = _countryController.text.trim();
+
+          String? selectedCountry;
+
+          if (currentCountry.isNotEmpty) {
+            for (final country in countries) {
+              if (country.country.trim().toLowerCase() ==
+                  currentCountry.toLowerCase()) {
+                selectedCountry = country.country;
+                break;
+              }
+            }
+          }
+
+          return DropdownButtonFormField<String>(
+            value: selectedCountry,
+
+            decoration: const InputDecoration(
+              labelText: 'Country',
+              border: OutlineInputBorder(),
+            ),
+
+            hint: const Text('Select Country'),
+
+            isExpanded: true,
+
+            items: countries.map((country) {
+              return DropdownMenuItem<String>(
+                value: country.country,
+                child: Text(country.country),
+              );
+            }).toList(),
+
+            onChanged: (value) {
+              setState(() {
+                _countryController.text = value ?? '';
+              });
+            },
+
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Country is required';
+              }
+
+              return null;
+            },
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
+    ),
+  );
+ }
 }

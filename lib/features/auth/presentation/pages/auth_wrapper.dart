@@ -25,10 +25,7 @@ class AuthWrapper extends StatelessWidget {
         }
 
         if (state is AuthAuthenticated) {
-          // return EmployeeDashboardPage(
-          //    onThemeToggle: onThemeToggle,
-          //    isDarkMode: isDarkMode,
-          // );
+
           return BlocProvider(
             create: (_) => EmployeeCubit(
               EmployeeRepository(),

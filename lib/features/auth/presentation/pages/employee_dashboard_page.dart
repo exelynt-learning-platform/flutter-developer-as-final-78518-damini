@@ -13,6 +13,10 @@ import '../widgets/employee_filter_sheet.dart';
 import 'add_edit_employee_screen.dart';
 import 'package:flutter_developer_as_final_78518_damini/features/auth/model/employee_model.dart';
 import 'employee_detail_screen.dart';
+import '../cubit/country_cubit.dart';
+import '../../../auth/data/country_repository.dart';
+import 'package:http/http.dart' as http;
+
 
 class EmployeeDashboardPage extends StatefulWidget {
   final VoidCallback? onThemeToggle;
@@ -44,10 +48,23 @@ class _EmployeeDashboardPageState extends State<EmployeeDashboardPage> {
       context: context,
       isScrollControlled: true,
       builder: (_) {
-        return BlocProvider.value(
-          value: employeeCubit,
-          child: const EmployeeFilterSheet(),
-        );
+        return MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(
+                    value: employeeCubit,
+                  ),
+                  BlocProvider(
+                    create: (_) => CountryCubit(
+                      CountryRepository(http.Client()),
+                    )..getCountries(),
+                  ),
+                ],
+                child: const EmployeeFilterSheet(),
+              );
+        // return BlocProvider.value(
+        //   value: employeeCubit,
+        //   child: const EmployeeFilterSheet(),
+        // );
       },
     );
   }
@@ -90,8 +107,17 @@ class _EmployeeDashboardPageState extends State<EmployeeDashboardPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => BlocProvider.value(
-                value: employeeCubit,
+              builder: (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(
+                    value: employeeCubit,
+                  ),
+                  BlocProvider(
+                    create: (_) => CountryCubit(
+                      CountryRepository(http.Client()),
+                    )..getCountries(),
+                  ),
+                ],
                 child: const AddEditEmployeeScreen(),
               ),
             ),
@@ -229,17 +255,25 @@ class _EmployeeDashboardPageState extends State<EmployeeDashboardPage> {
                           },
                           onEdit: () {
                              final employeeCubit = context.read<EmployeeCubit>();
+            
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => BlocProvider.value(
-                                    value: employeeCubit,
-                                    child: AddEditEmployeeScreen(
-                                      employee: employee,
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => MultiBlocProvider(
+                                  providers: [
+                                    BlocProvider.value(
+                                      value: employeeCubit,
                                     ),
-                                  ),
+                                    BlocProvider(
+                                      create: (_) => CountryCubit(
+                                        CountryRepository(http.Client()),
+                                      )..getCountries(),
+                                    ),
+                                  ],
+                                  child: AddEditEmployeeScreen(employee: employee),
                                 ),
-                              );
+                              ),
+                            );
                           },
                           onDelete: () {
                            showDeleteConfirmation(

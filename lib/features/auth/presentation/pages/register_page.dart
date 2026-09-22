@@ -95,9 +95,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             return 'Please enter your name';
                           }
 
-                          if (!value.contains('@')) {
-                            return 'Please enter a valid name';
-                          }
+                          // if (!value.contains('@')) {
+                          //   return 'Please enter a valid name';
+                          // }
 
                           return null;
                         },

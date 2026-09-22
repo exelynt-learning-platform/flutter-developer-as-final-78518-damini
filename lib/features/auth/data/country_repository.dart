@@ -10,7 +10,7 @@ class CountryRepository {
 
   Future<List<CountryModel>> getCountries() async {
     final response = await client.get(
-      Uri.parse(AppConstants.employeeApi),
+      Uri.parse(AppConstants.countryApi),
     );
 
     if (response.statusCode == 200) {
