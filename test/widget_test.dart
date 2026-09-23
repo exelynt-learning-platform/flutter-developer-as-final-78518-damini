@@ -11,6 +11,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_developer_as_final_78518_damini/main.dart';
 
 void main() {
+   test('basic test should pass', () {
+    expect(2 + 2, 4);
+  });
   // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
   //   // Build our app and trigger a frame.
   //   await tester.pumpWidget(const MyApp());

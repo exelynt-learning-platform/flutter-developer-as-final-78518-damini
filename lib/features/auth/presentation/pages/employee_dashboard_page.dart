@@ -30,6 +30,7 @@ class EmployeeDashboardPage extends StatefulWidget {
 
 class _EmployeeDashboardPageState extends State<EmployeeDashboardPage> {
   final _searchController = TextEditingController();
+  final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   void dispose() {
@@ -206,6 +207,7 @@ class _EmployeeDashboardPageState extends State<EmployeeDashboardPage> {
                 if (state is EmployeeLoaded) {
                   if (state.employees.isEmpty) {
                     return RefreshIndicator(
+                      key: _refreshIndicatorKey,
                       onRefresh: () {
                         return context
                             .read<EmployeeCubit>()
