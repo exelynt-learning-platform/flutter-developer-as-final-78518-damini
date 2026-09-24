@@ -5,8 +5,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_developer_as_final_78518_damini/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter_developer_as_final_78518_damini/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter_developer_as_final_78518_damini/features/auth/presentation/pages/login_page.dart';
-import 'package:flutter_developer_as_final_78518_damini/features/auth/presentation/cubit/employee_cubit.dart';
-
 
 class MockAuthCubit extends Mock implements AuthCubit {}
 
